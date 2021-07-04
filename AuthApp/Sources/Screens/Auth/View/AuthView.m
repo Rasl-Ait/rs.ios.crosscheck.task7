@@ -67,12 +67,11 @@ UIColor *red;
 	
 	[self addSubview:self.titleLabel];
 	
-	[self.secureCodeLabel.heightAnchor constraintEqualToConstant: 20].active = YES;
+//	[self.secureCodeLabel.heightAnchor constraintEqualToConstant: 20].active = YES;
 	
 	[self.titleLabel.topAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.topAnchor constant:80.0].active = YES;
-	[self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:36.0].active = YES;
-	[self.titleLabel.heightAnchor constraintEqualToConstant:50].active = YES;
-	[self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant: -36.0].active = YES;
+	[self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:101.0].active = YES;
+	[self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant: -101.0].active = YES;
 }
 
 - (void) setupTextField {
@@ -124,12 +123,10 @@ UIColor *red;
 	[self.stackView.topAnchor constraintEqualToAnchor: self.textFieldView.topAnchor].active = YES;
 	[self.stackView.leadingAnchor constraintEqualToAnchor:self.textFieldView.leadingAnchor].active = YES;
 	[self.stackView.trailingAnchor constraintEqualToAnchor:self.textFieldView.trailingAnchor].active = YES;
-	
-	[self.textFieldView.topAnchor constraintEqualToAnchor: self.titleLabel.bottomAnchor constant: 40].active = YES;
-	[self.textFieldView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:36.0].active = YES;
+	[self.stackView.bottomAnchor constraintEqualToAnchor:self.textFieldView.bottomAnchor].active = YES;
+
+	[self.textFieldView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant: 36.0].active = YES;
 	[self.textFieldView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant: -36.0].active = YES;
-	[self.textFieldView.heightAnchor constraintEqualToConstant:100].active = YES;
-	
 }
 
 - (void) setupButton {
@@ -172,7 +169,7 @@ UIColor *red;
 	
 	[self.authorizedButton.topAnchor constraintEqualToAnchor: self.textFieldView.bottomAnchor constant: 60].active = YES;
 	[self.authorizedButton.widthAnchor constraintEqualToConstant: 156.0].active = YES;
-	[self.authorizedButton.heightAnchor constraintEqualToConstant: 45.0].active = YES;
+	[self.authorizedButton.heightAnchor constraintEqualToConstant: 42.0].active = YES;
 	[self.authorizedButton.centerXAnchor constraintEqualToAnchor: self.centerXAnchor].active = YES;
 }
 
@@ -180,14 +177,14 @@ UIColor *red;
 	self.secureView = [[UIView alloc] init];
 	self.secureView.translatesAutoresizingMaskIntoConstraints = false;
 	self.secureView.backgroundColor = UIColor.whiteColor;
-	[self.secureView setHidden:true];
+	[self.secureView setHidden:false];
 	
 	self.secureView.layer.cornerRadius = 10.0;
 	
 	UIStackView *secureButtonStack = [[UIStackView alloc] init];
 	secureButtonStack.translatesAutoresizingMaskIntoConstraints = NO;
 	secureButtonStack.axis = UILayoutConstraintAxisHorizontal;
-	secureButtonStack.distribution = UIStackViewDistributionFillEqually;
+	secureButtonStack.distribution = UIStackViewDistributionFill;
 	secureButtonStack.alignment = UIStackViewAlignmentCenter;
 	secureButtonStack.spacing = 20;
 	
@@ -196,7 +193,7 @@ UIColor *red;
 	vStack.axis = UILayoutConstraintAxisVertical;
 	vStack.distribution = UIStackViewDistributionFillEqually;
 	vStack.alignment = UIStackViewAlignmentCenter;
-	vStack.spacing = 10;
+	vStack.spacing = 5;
 	
 	for (int i = 1; i < 4; i++) {
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -237,10 +234,10 @@ UIColor *red;
 	[vStack.bottomAnchor constraintEqualToAnchor: self.secureView.bottomAnchor constant:-15].active = YES;
 	[vStack.centerXAnchor constraintEqualToAnchor: self.secureView.centerXAnchor].active = YES;
 	
-	[self.secureView.widthAnchor constraintEqualToConstant: 240.0].active = YES;
-	[self.secureView.heightAnchor constraintEqualToConstant: 140.0].active = YES;
+	[self.secureView.topAnchor constraintEqualToAnchor:self.authorizedButton.bottomAnchor constant:67.0].active = YES;
+	[self.secureView.widthAnchor constraintEqualToConstant: 236.0].active = YES;
 	[self.secureView.centerXAnchor constraintEqualToAnchor: self.centerXAnchor].active = YES;
-	[self.secureView.bottomAnchor constraintEqualToAnchor: self.bottomAnchor constant: -50].active = YES;
+	[self.secureView.bottomAnchor constraintEqualToAnchor: self.safeAreaLayoutGuide.bottomAnchor constant: -50].active = YES;
 }
 
 - (void) setIsHidden:(BOOL) isHidden {
