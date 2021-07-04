@@ -66,9 +66,7 @@ UIColor *red;
 																							size: 18.0f];
 	
 	[self addSubview:self.titleLabel];
-	
-//	[self.secureCodeLabel.heightAnchor constraintEqualToConstant: 20].active = YES;
-	
+		
 	[self.titleLabel.topAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.topAnchor constant:80.0].active = YES;
 	[self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:101.0].active = YES;
 	[self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant: -101.0].active = YES;
@@ -83,6 +81,7 @@ UIColor *red;
 	self.loginTextField.layer.borderColor = [UIColor colorBlackColar].CGColor;
 	self.loginTextField.layer.borderWidth = 1.5;
 	self.loginTextField.layer.cornerRadius = 5.0;
+	self.loginTextField.layer.masksToBounds = true;
 	
 	
 	self.passwordTextField = [[UITextField alloc] init];
@@ -94,6 +93,7 @@ UIColor *red;
 	self.passwordTextField.layer.borderColor = [UIColor colorBlackColar].CGColor;
 	self.passwordTextField.layer.borderWidth = 1.5;
 	self.passwordTextField.layer.cornerRadius = 5.0;
+	self.passwordTextField.layer.masksToBounds = true;
 	
 	self.loginTextField.delegate = self;
 	self.passwordTextField.delegate = self;
@@ -156,6 +156,7 @@ UIColor *red;
 	self.authorizedButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 5);
 	self.authorizedButton.layer.borderWidth = 2.0;
 	self.authorizedButton.layer.cornerRadius = 10.0;
+	self.authorizedButton.layer.masksToBounds = true;
 	
 	[self.authorizedButton addTarget:self
 														action:@selector(authorizedButtonTapped:)
@@ -177,9 +178,10 @@ UIColor *red;
 	self.secureView = [[UIView alloc] init];
 	self.secureView.translatesAutoresizingMaskIntoConstraints = false;
 	self.secureView.backgroundColor = UIColor.whiteColor;
-	[self.secureView setHidden:false];
+	[self.secureView setHidden:true];
 	
 	self.secureView.layer.cornerRadius = 10.0;
+	self.secureView.layer.masksToBounds = true;
 	
 	UIStackView *secureButtonStack = [[UIStackView alloc] init];
 	secureButtonStack.translatesAutoresizingMaskIntoConstraints = NO;
@@ -212,6 +214,8 @@ UIColor *red;
 		
 		button.layer.borderWidth = 1.5;
 		button.layer.cornerRadius = 25.0;
+		button.layer.masksToBounds = true;
+		
 		button.tag = i;
 		[button addTarget:self
 							 action:@selector(secureButtonTapped:)
