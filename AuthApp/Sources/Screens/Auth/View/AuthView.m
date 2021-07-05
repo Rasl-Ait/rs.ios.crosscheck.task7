@@ -9,7 +9,15 @@
 #import "UIColor+Extension.h"
 #import "SecureView.h"
 
+
+typedef enum {
+	success,
+	ready,
+	error
+} SecureType;
+
 @interface AuthView () <UITextFieldDelegate, SecureViewDelegate>
+@property (nonatomic) SecureType secureType;
 
 @end
 
@@ -24,6 +32,8 @@
 		[self setupTextFiedVIew];
 		[self setupButton];
 		[self setupSecureView];
+		
+		self.secureType = ready;
 		
 		UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
 																								 initWithTarget:self
@@ -43,7 +53,7 @@
 																				 size:36.0f];
 	
 	[self addSubview:self.titleLabel];
-		
+	
 	[self.titleLabel.topAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.topAnchor constant:80.0].active = YES;
 	[self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:101.0].active = YES;
 	[self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant: -101.0].active = YES;
@@ -53,6 +63,7 @@
 	self.loginTextField = [[UITextField alloc] init];
 	self.loginTextField.borderStyle = UITextBorderStyleRoundedRect;
 	self.loginTextField.placeholder = @"Login";
+	self.loginTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	self.loginTextField.font = [UIFont fontWithName:@"SF Pro Display Regular"
 																						 size:15.0f];
 	self.loginTextField.layer.borderColor = [UIColor colorBlackColar].CGColor;
@@ -63,6 +74,7 @@
 	self.passwordTextField = [[UITextField alloc] init];
 	self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
 	self.passwordTextField.placeholder = @"Password";
+	self.passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	[self.passwordTextField setSecureTextEntry:YES];
 	self.passwordTextField.font = [UIFont fontWithName:@"SF Pro Display Regular"
 																								size:15.0f];
@@ -73,6 +85,15 @@
 	
 	self.loginTextField.delegate = self;
 	self.passwordTextField.delegate = self;
+	
+	
+	// Targets
+	[self.loginTextField addTarget:self
+													action:@selector(textFieldDidChange:)
+								forControlEvents:UIControlEventEditingChanged];
+	[self.passwordTextField addTarget:self
+														 action:@selector(textFieldDidChange:)
+									 forControlEvents:UIControlEventEditingChanged];
 	
 }
 
@@ -100,7 +121,7 @@
 	[self.stackView.leadingAnchor constraintEqualToAnchor:self.textFieldView.leadingAnchor].active = YES;
 	[self.stackView.trailingAnchor constraintEqualToAnchor:self.textFieldView.trailingAnchor].active = YES;
 	[self.stackView.bottomAnchor constraintEqualToAnchor:self.textFieldView.bottomAnchor].active = YES;
-
+	
 	[self.textFieldView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant: 36.0].active = YES;
 	[self.textFieldView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant: -36.0].active = YES;
 }
@@ -203,25 +224,84 @@
 - (void) authorizedButtonTapped: (UIButton *) sender {
 	[self setButtonColor:sender bgColor:[UIColor whiteColor]];
 	
-	if (![self.loginTextField.text isEqualToString:@"username"] && ![self.passwordTextField.text isEqualToString:@"password"]) {
-		self.loginTextField.layer.borderColor = [UIColor colorRed].CGColor;
-		
-		self.passwordTextField.layer.borderColor = [UIColor colorRed].CGColor;
-		
-	} else if (![self.loginTextField.text isEqualToString:@"username"]) {
-		[self setTextFieldLayerBorderColor:self.loginTextField border:[UIColor redColor]];
-	} else if (![self.passwordTextField.text isEqualToString:@"password"]) {
-			[self setTextFieldLayerBorderColor:self.passwordTextField border:[UIColor redColor]];
-	} else {
-		[self setTextFieldLayerBorderColor:self.loginTextField border:[UIColor colorCreen]];
-		[self setTextFieldLayerBorderColor:self.passwordTextField border:[UIColor colorCreen]];
-		
-		[self setIsHidden:false];
-		self.authorizedButton.alpha = 0.5;
+	if (![self.loginTextField.text isEqualToString:@"username"] &&
+			![self.passwordTextField.text isEqualToString:@"password"]) {
+		self.secureType = error;
 	}
+	
+	if (![self.loginTextField.text isEqualToString:@"username"]) {
+		[self setTextFieldLayerBorderColor:self.loginTextField border:[UIColor colorRed]];
+	}
+	
+	if ([self.loginTextField.text isEqualToString:@"username"]) {
+		[self setTextFieldLayerBorderColor:self.loginTextField border:[UIColor colorCreen]];
+	}
+	
+	if (![self.passwordTextField.text isEqualToString:@"password"]) {
+		[self setTextFieldLayerBorderColor:self.passwordTextField border:[UIColor colorRed]];
+	}
+	
+	if ([self.passwordTextField.text isEqualToString:@"password"]) {
+		[self setTextFieldLayerBorderColor:self.passwordTextField border:[UIColor colorCreen]];
+	}
+	
+	if ([self.loginTextField.text isEqualToString:@"username"] &&
+			[self.passwordTextField.text isEqualToString:@"password"]) {
+		self.secureType = success;
+	}
+	
+	switch (self.secureType) {
+		case error:
+			self.loginTextField.layer.borderColor = [UIColor colorRed].CGColor;
+			self.passwordTextField.layer.borderColor = [UIColor colorRed].CGColor;
+			break;
+		case success:
+			[self setTextFieldLayerBorderColor:self.loginTextField border:[UIColor colorCreen]];
+			[self setTextFieldLayerBorderColor:self.passwordTextField border:[UIColor colorCreen]];
+			[self setIsHidden:false];
+			self.authorizedButton.alpha = 0.5;
+			self.secureType = ready;
+			break;
+		case ready:
+			break;
+			
+		default:
+			break;
+	}
+	
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidChange:(UITextField*)textField {
+	//	if (textField == self.loginTextField) {
+	//		if ([self.loginTextField.text isEqualToString:@"username"]) {
+	//			[self setTextFieldLayerBorderColor:textField border:[UIColor colorCreen]];
+	//		} else {
+	//			[self setTextFieldLayerBorderColor:textField border:[UIColor colorBlackColar]];
+	//		}
+	//	}
+	//
+	//	if (textField == self.passwordTextField) {
+	//		if ([textField.text isEqualToString:@"password"]) {
+	//			[self setTextFieldLayerBorderColor:textField border:[UIColor colorCreen]];
+	//		} else {
+	//			[self setTextFieldLayerBorderColor:textField border:[UIColor colorBlackColar]];
+	//		}
+	//		}
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+	
+	if ([string isEqualToString:@""]) {
+		return true;
+	}
+	
+	NSString *regex = @"[A-Za-z]+";
+	NSPredicate *nameTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+	return ([nameTest evaluateWithObject:string]);
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
 	if (textField == self.loginTextField) {
 		[self setTextFieldLayerBorderColor:textField border:[UIColor colorBlackColar]];
