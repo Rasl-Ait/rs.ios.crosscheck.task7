@@ -158,6 +158,7 @@ typedef enum {
 			[self.delegate success];
 			break;
 		case ready:
+			self.layer.borderColor = [UIColor clearColor].CGColor;
 			break;
 			
 		default:
