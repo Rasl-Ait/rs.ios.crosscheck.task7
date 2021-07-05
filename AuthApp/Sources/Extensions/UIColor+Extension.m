@@ -1,13 +1,13 @@
 //
-//  UIColor+MyColor.m
+//  UIColor+Extension.m
 //  AuthApp
 //
 //  Created by rasul on 7/4/21.
 //
 
-#import "UIColor+MyColor.h"
+#import "UIColor+Extension.h"
 
-@implementation UIColor (MyColor)
+@implementation UIColor (Extension)
 
 
 + (UIColor *) colorRed {

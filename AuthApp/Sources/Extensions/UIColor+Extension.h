@@ -1,5 +1,5 @@
 //
-//  UIColor+MyColor.h
+//  UIColor+Extension.h
 //  AuthApp
 //
 //  Created by rasul on 7/4/21.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIColor (MyColor)
+@interface UIColor (Extension)
 
 +(UIColor *) colorRed;
 +(UIColor *) colorBlackColar;

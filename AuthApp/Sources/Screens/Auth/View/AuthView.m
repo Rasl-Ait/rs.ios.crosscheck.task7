@@ -6,27 +6,16 @@
 //
 
 #import "AuthView.h"
-#import "UIColor+MyColor.h"
+#import "UIColor+Extension.h"
+#import "SecureView.h"
 
-typedef enum {
-	success,
-	ready,
-	error
-} SecureType;
-
-@interface AuthView () <UITextFieldDelegate>
-
-#pragma mark Property
-@property (nonatomic, strong) NSMutableString *resultString;
-@property (nonatomic) SecureType secureType;
+@interface AuthView () <UITextFieldDelegate, SecureViewDelegate>
 
 @end
 
 @implementation AuthView
 
-UIColor *red;
-- (instancetype)init
-{
+- (instancetype)init {
 	self = [super init];
 	if (self) {
 		[self setupLabel];
@@ -35,9 +24,6 @@ UIColor *red;
 		[self setupTextFiedVIew];
 		[self setupButton];
 		[self setupSecureView];
-		
-		self.resultString = [[NSMutableString alloc] init];
-		self.secureType = ready;
 		
 		UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
 																								 initWithTarget:self
@@ -56,15 +42,6 @@ UIColor *red;
 	self.titleLabel.font = [UIFont fontWithName:@"SF Pro Display Bold"
 																				 size:36.0f];
 	
-	self.secureCodeLabel = [[UILabel alloc] init];
-	self.secureCodeLabel.translatesAutoresizingMaskIntoConstraints = false;
-	self.secureCodeLabel.text = @"_";
-	self.secureCodeLabel.backgroundColor = UIColor.whiteColor;
-	self.secureCodeLabel.textColor = UIColor.blackColor;
-	self.secureCodeLabel.textAlignment = NSTextAlignmentCenter;
-	self.secureCodeLabel.font = [UIFont fontWithName:@"SF Pro Text Semibold"
-																							size: 18.0f];
-	
 	[self addSubview:self.titleLabel];
 		
 	[self.titleLabel.topAnchor constraintEqualToAnchor:self.safeAreaLayoutGuide.topAnchor constant:80.0].active = YES;
@@ -82,7 +59,6 @@ UIColor *red;
 	self.loginTextField.layer.borderWidth = 1.5;
 	self.loginTextField.layer.cornerRadius = 5.0;
 	self.loginTextField.layer.masksToBounds = true;
-	
 	
 	self.passwordTextField = [[UITextField alloc] init];
 	self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
@@ -175,68 +151,12 @@ UIColor *red;
 }
 
 - (void) setupSecureView {
-	self.secureView = [[UIView alloc] init];
+	self.secureView = [[SecureView alloc] init];
 	self.secureView.translatesAutoresizingMaskIntoConstraints = false;
-	self.secureView.backgroundColor = UIColor.whiteColor;
+	self.secureView.delegate = self;
 	[self.secureView setHidden:true];
 	
-	self.secureView.layer.cornerRadius = 10.0;
-	self.secureView.layer.masksToBounds = true;
-	
-	UIStackView *secureButtonStack = [[UIStackView alloc] init];
-	secureButtonStack.translatesAutoresizingMaskIntoConstraints = NO;
-	secureButtonStack.axis = UILayoutConstraintAxisHorizontal;
-	secureButtonStack.distribution = UIStackViewDistributionFill;
-	secureButtonStack.alignment = UIStackViewAlignmentCenter;
-	secureButtonStack.spacing = 20;
-	
-	UIStackView *vStack = [[UIStackView alloc] init];
-	vStack.translatesAutoresizingMaskIntoConstraints = NO;
-	vStack.axis = UILayoutConstraintAxisVertical;
-	vStack.distribution = UIStackViewDistributionFillEqually;
-	vStack.alignment = UIStackViewAlignmentCenter;
-	vStack.spacing = 5;
-	
-	for (int i = 1; i < 4; i++) {
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-		button.translatesAutoresizingMaskIntoConstraints = false;
-		[button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
-		button.titleLabel.font = [UIFont fontWithName:@"SF Pro Text Semibold"
-																						 size: 24.0f];
-		[button setTitleColor: [UIColor colorBlue:1.0]
-								 forState: UIControlStateNormal];
-		
-		[button setTitleColor: [UIColor colorBlue:1.0]
-								 forState: UIControlStateHighlighted];
-		
-		
-		button.layer.borderColor = [UIColor colorBlue:1.0].CGColor;
-		
-		button.layer.borderWidth = 1.5;
-		button.layer.cornerRadius = 25.0;
-		button.layer.masksToBounds = true;
-		
-		button.tag = i;
-		[button addTarget:self
-							 action:@selector(secureButtonTapped:)
-		 forControlEvents:UIControlEventTouchUpInside];
-		[button addTarget:self
-							 action:@selector(secureButtonPressed:)
-		 forControlEvents:UIControlEventTouchDown];
-		
-		[button.heightAnchor constraintEqualToConstant: 50.0].active = YES;
-		[button.widthAnchor constraintEqualToConstant: 50.0].active = YES;
-		[secureButtonStack addArrangedSubview:button];
-		[vStack addArrangedSubview: self.secureCodeLabel];
-		[vStack addArrangedSubview: secureButtonStack];
-	}
-	
-	[self.secureView addSubview:vStack];
 	[self addSubview: self.secureView];
-	
-	[vStack.topAnchor constraintEqualToAnchor:self.secureView.topAnchor constant: 15].active = YES;
-	[vStack.bottomAnchor constraintEqualToAnchor: self.secureView.bottomAnchor constant:-15].active = YES;
-	[vStack.centerXAnchor constraintEqualToAnchor: self.secureView.centerXAnchor].active = YES;
 	
 	[self.secureView.topAnchor constraintEqualToAnchor:self.authorizedButton.bottomAnchor constant:67.0].active = YES;
 	[self.secureView.widthAnchor constraintEqualToConstant: 236.0].active = YES;
@@ -259,13 +179,10 @@ UIColor *red;
 - (void) setDefault {
 	self.passwordTextField.text = @"";
 	self.loginTextField.text = @"";
-	self.secureCodeLabel.text = @"_";
-	[self.resultString setString:@""];
-	self.secureType = ready;
 	self.textFieldView.alpha = 1.0;
 	self.authorizedButton.alpha = 1.0;
+	[self.secureView setDefault];
 	
-	self.secureView.layer.borderColor = UIColor.clearColor.CGColor;
 	[self setTextFieldLayerBorderColor:self.loginTextField border:[UIColor colorBlackColar]];
 	[self setTextFieldLayerBorderColor:self.passwordTextField border:[UIColor colorBlackColar]];
 }
@@ -278,52 +195,7 @@ UIColor *red;
 	textField.layer.borderColor = color.CGColor;
 }
 
-#pragma mark Action
-
-- (void) secureButtonPressed: (UIButton *) sender {
-	[self setButtonColor:sender bgColor:[UIColor colorBlue:0.2]];
-}
-
-- (void) secureButtonTapped: (UIButton *) sender {
-	NSInteger index = sender.tag;
-	[self setButtonColor:sender bgColor:[UIColor whiteColor]];
-	
-	if (self.secureType == error) {
-		self.secureType = ready;
-	}
-	
-	[self.resultString appendString:[NSString stringWithFormat:@"%ld", (long)index]];
-	
-	self.secureCodeLabel.text = self.resultString;
-	
-	if (self.resultString.length == 3) {
-		if ([self.resultString isEqualToString: @"132"]) {
-			self.secureType = success;
-		} else {
-			self.secureType = error;
-		}
-	}
-	
-	switch (self.secureType) {
-		case error:
-			self.secureView.layer.borderColor = [UIColor colorRed].CGColor;;
-			self.secureView.layer.borderWidth = 2.0;
-			self.secureCodeLabel.text = @"_";
-			[self.resultString setString:@""];
-			break;
-		case success:
-			self.secureView.layer.borderColor = [UIColor colorCreen].CGColor;;
-			self.secureView.layer.borderWidth = 2.0;
-			[self.delegate showSuccess];
-			break;
-		case ready:
-			break;
-			
-		default:
-			break;
-	}
-}
-
+#pragma mark Actions
 - (void) authorizedButtonPressed: (UIButton *) sender {
 	[self setButtonColor:sender bgColor:[UIColor colorBlue:0.2]];
 }
@@ -350,7 +222,6 @@ UIColor *red;
 }
 
 #pragma mark - UITextFieldDelegate
-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
 	if (textField == self.loginTextField) {
 		[self setTextFieldLayerBorderColor:textField border:[UIColor colorBlackColar]];
@@ -374,5 +245,12 @@ UIColor *red;
 	[textField resignFirstResponder];
 	return YES;
 }
+
+#pragma mark - SecureViewDelegate
+- (void)success {
+	[self.delegate success];
+}
+
+
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC4C41572692DD92008A7135 /* SecureView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC4C41562692DD92008A7135 /* SecureView.m */; };
 		DC8E28EB269064CB004EB5B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8E28EA269064CB004EB5B4 /* AppDelegate.m */; };
 		DC8E28F1269064CB004EB5B4 /* AuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8E28F0269064CB004EB5B4 /* AuthViewController.m */; };
 		DC8E28F6269064CE004EB5B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC8E28F5269064CE004EB5B4 /* Assets.xcassets */; };
@@ -17,10 +18,12 @@
 		DC8E29182690C910004EB5B4 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = DC8E29172690C910004EB5B4 /* SF-Pro-Display-Black.otf */; };
 		DC8E291A2690C919004EB5B4 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DC8E29192690C919004EB5B4 /* SF-Pro-Display-Regular.otf */; };
 		DC8E291C2690DF5D004EB5B4 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DC8E291B2690DF5D004EB5B4 /* SF-Pro-Text-Semibold.otf */; };
-		DC8E292026911B3A004EB5B4 /* UIColor+MyColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8E291F26911B39004EB5B4 /* UIColor+MyColor.m */; };
+		DC8E292026911B3A004EB5B4 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8E291F26911B39004EB5B4 /* UIColor+Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC4C41552692DD92008A7135 /* SecureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecureView.h; sourceTree = "<group>"; };
+		DC4C41562692DD92008A7135 /* SecureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecureView.m; sourceTree = "<group>"; };
 		DC8E28E6269064CB004EB5B4 /* AuthApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC8E28E9269064CB004EB5B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DC8E28EA269064CB004EB5B4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -36,8 +39,8 @@
 		DC8E29172690C910004EB5B4 /* SF-Pro-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Black.otf"; sourceTree = "<group>"; };
 		DC8E29192690C919004EB5B4 /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
 		DC8E291B2690DF5D004EB5B4 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
-		DC8E291E26911B39004EB5B4 /* UIColor+MyColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+MyColor.h"; sourceTree = "<group>"; };
-		DC8E291F26911B39004EB5B4 /* UIColor+MyColor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MyColor.m"; sourceTree = "<group>"; };
+		DC8E291E26911B39004EB5B4 /* UIColor+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		DC8E291F26911B39004EB5B4 /* UIColor+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				DC8E290B2690BA73004EB5B4 /* Application */,
-				DC8E291D26911AF7004EB5B4 /* Category */,
+				DC8E291D26911AF7004EB5B4 /* Extensions */,
 				DC8E290A2690BA67004EB5B4 /* Screens */,
 			);
 			path = Sources;
@@ -138,6 +141,8 @@
 			children = (
 				DC8E29102690BAFE004EB5B4 /* AuthView.h */,
 				DC8E29112690BAFE004EB5B4 /* AuthView.m */,
+				DC4C41552692DD92008A7135 /* SecureView.h */,
+				DC4C41562692DD92008A7135 /* SecureView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -153,13 +158,13 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		DC8E291D26911AF7004EB5B4 /* Category */ = {
+		DC8E291D26911AF7004EB5B4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DC8E291E26911B39004EB5B4 /* UIColor+MyColor.h */,
-				DC8E291F26911B39004EB5B4 /* UIColor+MyColor.m */,
+				DC8E291E26911B39004EB5B4 /* UIColor+Extension.h */,
+				DC8E291F26911B39004EB5B4 /* UIColor+Extension.m */,
 			);
-			path = Category;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,10 +240,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC8E28F1269064CB004EB5B4 /* AuthViewController.m in Sources */,
+				DC4C41572692DD92008A7135 /* SecureView.m in Sources */,
 				DC8E28EB269064CB004EB5B4 /* AppDelegate.m in Sources */,
 				DC8E29122690BAFE004EB5B4 /* AuthView.m in Sources */,
 				DC8E28FC269064CE004EB5B4 /* main.m in Sources */,
-				DC8E292026911B3A004EB5B4 /* UIColor+MyColor.m in Sources */,
+				DC8E292026911B3A004EB5B4 /* UIColor+Extension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

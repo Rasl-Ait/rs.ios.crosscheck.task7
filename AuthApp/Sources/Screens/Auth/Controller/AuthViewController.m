@@ -9,7 +9,6 @@
 #import "AuthView.h"
  
 @interface AuthViewController () <AuthViewDelegate>
-
 @property (nonatomic, strong) AuthView *authView;
 
 @end
@@ -51,7 +50,7 @@
 }
 
 #pragma mark AuthViewDelegate
-- (void)showSuccess {
+- (void)success {
 	[self showAlert];
 }
 
