@@ -7,6 +7,7 @@
 
 #import "SecureView.h"
 #import "UIColor+Extension.h"
+#import "CustomButton.h"
 
 typedef enum {
 	success,
@@ -14,7 +15,7 @@ typedef enum {
 	error
 } SecureType;
 
-@interface SecureView ()
+@interface SecureView () <CustomButtonDelegate>
 
 #pragma mark Property
 
@@ -68,31 +69,10 @@ typedef enum {
 	vStack.spacing = 5;
 	
 	for (int i = 1; i < 4; i++) {
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-		button.translatesAutoresizingMaskIntoConstraints = false;
+		CustomButton *button = [[CustomButton alloc] initWithType:Secure];
 		[button setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
-		button.titleLabel.font = [UIFont fontWithName:@"SF Pro Text Semibold"
-																						 size: 24.0f];
-		[button setTitleColor: [UIColor colorBlue:1.0]
-								 forState: UIControlStateNormal];
-		
-		[button setTitleColor: [UIColor colorBlue:1.0]
-								 forState: UIControlStateHighlighted];
-		
-		
-		button.layer.borderColor = [UIColor colorBlue:1.0].CGColor;
-		
-		button.layer.borderWidth = 1.5;
-		button.layer.cornerRadius = 25.0;
-		button.layer.masksToBounds = true;
-		
 		button.tag = i;
-		[button addTarget:self
-							 action:@selector(secureButtonTapped:)
-		 forControlEvents:UIControlEventTouchUpInside];
-		[button addTarget:self
-							 action:@selector(secureButtonPressed:)
-		 forControlEvents:UIControlEventTouchDown];
+		button.delegate = self;
 		
 		[button.heightAnchor constraintEqualToConstant: 50.0].active = YES;
 		[button.widthAnchor constraintEqualToConstant: 50.0].active = YES;
@@ -108,10 +88,6 @@ typedef enum {
 	[vStack.centerXAnchor constraintEqualToAnchor: self.centerXAnchor].active = YES;
 }
 
-- (void) setButtonColor:(UIButton *) button bgColor:(UIColor *)color {
-	button.backgroundColor = color;
-}
-
 - (void) setDefault {
 	self.secureCodeLabel.text = @"_";
 	[self.resultString setString:@""];
@@ -119,15 +95,9 @@ typedef enum {
 	self.layer.borderColor = UIColor.clearColor.CGColor;
 }
 
-- (void) secureButtonPressed: (UIButton *) sender {
-	[self setButtonColor:sender bgColor:[UIColor colorBlue:0.2]];
-}
-
-
-#pragma mark Action
-- (void) secureButtonTapped: (UIButton *) sender {
+#pragma mark - CustomButtonDelegate
+- (void)didButtonTapped:(UIButton *)sender {
 	NSInteger index = sender.tag;
-	[self setButtonColor:sender bgColor:[UIColor whiteColor]];
 	
 	if (self.secureType == error) {
 		self.secureType = ready;

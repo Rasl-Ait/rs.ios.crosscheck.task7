@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SecureView.h"
+#import "CustomButton.h"
+#import "CustomTextField.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,12 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Property
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UITextField *loginTextField;
-@property (nonatomic, strong) UITextField *passwordTextField;
-@property (nonatomic, strong) UIButton *authorizedButton;
+@property (nonatomic, strong) CustomTextField *loginTextField;
+@property (nonatomic, strong) CustomTextField *passwordTextField;
+@property (nonatomic, strong) CustomButton *authorizedButton;
 @property (nonatomic, strong) UIStackView *stackView;
 @property (nonatomic, strong) SecureView *secureView;
-@property (nonatomic, strong) UIView *textFieldView;
 @property (nonatomic, weak) id<AuthViewDelegate> delegate;
 
 #pragma mark Method

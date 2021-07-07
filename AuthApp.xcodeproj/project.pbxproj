@@ -19,6 +19,8 @@
 		DC8E291A2690C919004EB5B4 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DC8E29192690C919004EB5B4 /* SF-Pro-Display-Regular.otf */; };
 		DC8E291C2690DF5D004EB5B4 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DC8E291B2690DF5D004EB5B4 /* SF-Pro-Text-Semibold.otf */; };
 		DC8E292026911B3A004EB5B4 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8E291F26911B39004EB5B4 /* UIColor+Extension.m */; };
+		DC97248F269630CD0027FCFE /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = DC97248E269630CD0027FCFE /* CustomTextField.m */; };
+		DCF3F67F269425D3006CFED4 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF3F67E269425D3006CFED4 /* CustomButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,10 @@
 		DC8E291B2690DF5D004EB5B4 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		DC8E291E26911B39004EB5B4 /* UIColor+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
 		DC8E291F26911B39004EB5B4 /* UIColor+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
+		DC97248D269630CD0027FCFE /* CustomTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTextField.h; sourceTree = "<group>"; };
+		DC97248E269630CD0027FCFE /* CustomTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTextField.m; sourceTree = "<group>"; };
+		DCF3F67D269425D3006CFED4 /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		DCF3F67E269425D3006CFED4 /* CustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +126,7 @@
 		DC8E290D2690BA9F004EB5B4 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DCF3F67C2694257A006CFED4 /* Custom Views */,
 				DC8E290B2690BA73004EB5B4 /* Application */,
 				DC8E291D26911AF7004EB5B4 /* Extensions */,
 				DC8E290A2690BA67004EB5B4 /* Screens */,
@@ -165,6 +172,33 @@
 				DC8E291F26911B39004EB5B4 /* UIColor+Extension.m */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DC97248C269630AC0027FCFE /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				DC97248D269630CD0027FCFE /* CustomTextField.h */,
+				DC97248E269630CD0027FCFE /* CustomTextField.m */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
+		DCF3F67C2694257A006CFED4 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				DC97248C269630AC0027FCFE /* TextField */,
+				DCF3F680269425D8006CFED4 /* Button */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		DCF3F680269425D8006CFED4 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				DCF3F67D269425D3006CFED4 /* CustomButton.h */,
+				DCF3F67E269425D3006CFED4 /* CustomButton.m */,
+			);
+			path = Button;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,9 +273,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC97248F269630CD0027FCFE /* CustomTextField.m in Sources */,
 				DC8E28F1269064CB004EB5B4 /* AuthViewController.m in Sources */,
 				DC4C41572692DD92008A7135 /* SecureView.m in Sources */,
 				DC8E28EB269064CB004EB5B4 /* AppDelegate.m in Sources */,
+				DCF3F67F269425D3006CFED4 /* CustomButton.m in Sources */,
 				DC8E29122690BAFE004EB5B4 /* AuthView.m in Sources */,
 				DC8E28FC269064CE004EB5B4 /* main.m in Sources */,
 				DC8E292026911B3A004EB5B4 /* UIColor+Extension.m in Sources */,
