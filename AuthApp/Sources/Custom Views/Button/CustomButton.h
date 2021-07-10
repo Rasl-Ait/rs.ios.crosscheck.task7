@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 typedef NS_ENUM(NSInteger, CustomButtonType) {
-		
 		Authorize = 0,
 		Secure
 };
@@ -24,7 +23,6 @@ typedef NS_ENUM(NSInteger, CustomButtonType) {
 @interface CustomButton : UIButton
 @property (nonatomic, weak) id<CustomButtonDelegate> delegate;
 @property (nonatomic) CustomButtonType btnType;
-
 
 -(id)initWithType:(CustomButtonType)btnType;
 

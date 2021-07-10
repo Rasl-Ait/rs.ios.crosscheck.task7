@@ -135,10 +135,6 @@ NSString *correctPassword = @"password";
 	[self.secureView setDefault];
 }
 
-- (void) setTextFieldLayerBorderColor:(UITextField *)textField border:(UIColor *) color {
-	textField.layer.borderColor = color.CGColor;
-}
-
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidChange:(UITextField*)textField {

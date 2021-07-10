@@ -45,7 +45,6 @@
 			[self setupSecureButton];
 			break;
 	}
-
 }
 
 - (void) setupAthorizedButton {
